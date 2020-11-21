@@ -1,26 +1,49 @@
 import unittest
-from app.models.game import Game
-from app.models.player import Player
+
+from app.models.game import *
+from app.models.player import *
 
 class GameTest(unittest.TestCase):
     def setUp(self):
-        self.player_1 = Player("Player1", "Rock")
-        self.player_2 = Player("Player2", "Scissors")
+        self.player_1 = Player("player 1", "rock")
+        self.player_2 = Player("player 2", "scissors")
 
-        self.game = Game(self.player_1, self.player_2)
+        self.game = Game(self.player_1, self.player_2)   
 
     def test_create_game(self):
         game_hands = self.player_1.hand + " vs " + self.player_2.hand
-        self.assertEqual("Rock vs Scissors", game_hands)
+        self.assertEqual("rock vs scissors", game_hands)
 
-    def test_game_draw(self):
-        self.player_2 = Player("Computer", "Rock")
-        self.game = Game(self.player_1, self.player_2)
-        self.assertEqual(None, self.game.play_game(self.player_1, self.player_2))
 
-    def test_game_rock_beats_scissors(self):
+    def test_game_is_a_draw(self):
+        self.player_2 = Player("player 2", "rock")
         self.game = Game(self.player_1, self.player_2)
-        self.assertEqual("Rock", self.player_1.hand)
-        self.assertEqual("Scissors", self.player_2.hand)
-        self.assertEqual(None, self.game.play_game(self.player_1, self.player_2))
+        self.assertEqual("draw", self.game.play_game())
+
+
+    def test_paper_beats_rock(self):
+        self.player_1 = Player("player 1", "paper")
+        self.player_2 = Player("player 2", "rock")
+        self.game = Game(self.player_1, self.player_2)
+        self.assertEqual("paper", self.player_1.hand)
+        self.assertEqual("rock", self.player_2.hand)
+        self.assertEqual("player 1", self.game.play_game())
+
+
+    def test_rock_beats_scissors(self):
+        self.player_1 = Player("player 1", "rock")
+        self.player_2 = Player("player 2", "scissors")
+        self.game = Game(self.player_1, self.player_2)
+        self.assertEqual("rock", self.player_1.hand)
+        self.assertEqual("scissors", self.player_2.hand)
+        self.assertEqual("player 1", self.game.play_game())
+
+
+    def test_scissors_beats_paper(self):
+        self.player_1 = Player("player 1", "scissors")
+        self.player_2 = Player("player 2", "paper")
+        self.game = Game(self.player_1, self.player_2)
+        self.assertEqual("scissors", self.player_1.hand)
+        self.assertEqual("paper", self.player_2.hand)
+        self.assertEqual("player 1", self.game.play_game())
 

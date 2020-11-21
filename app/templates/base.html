@@ -1,14 +1,25 @@
-<html>
-    <head>
-      <title>{{ title }} - Rock Paper Scissors</title>
-    </head>
-    <body>
-        <ul>
-          <li><a href="/">Home</a></li>
-        </ul>
-        <hr>
-        {% block content %}
 
-        {% endblock %}
-    </body>
+<html>
+  <head>
+    <title>{{ title }} - Rock Paper Scissors Game!</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}"
+  </head>
+  <body>
+      <header>
+          <nav>
+              <h2>The Rock, Paper, Scissors Game!</h2>
+              <ul>
+                  <li><a href="/">Return to the homepage </a></li>
+                  <li><a href="about">Home</a></li>
+                  <li><a href="play_game">Play Game</a></li>
+                  <li><a href="result">Result</a></li>
+                  
+              </ul>
+          </nav>
+      </header>
+      {% block content %}
+
+      {% endblock %}
+      <hr>
+  </body>
 </html>

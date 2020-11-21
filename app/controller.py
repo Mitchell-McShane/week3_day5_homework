@@ -1,15 +1,25 @@
-from flask import render_template
+from flask import render_template, request, redirect
 from app import app
 from app.models.player import Player
 from app.models.game import Game
 
 @app.route('/')
-def index():
+def base():
     return render_template('base.html', title='Home')
 
-@app.route('/<hand1>/<hand2>')
-def play_game(hand1, hand2):
-    player_1 = Player("Mitch", hand1)
-    player_2 = Player("Computer", hand2)
-    current_game = Game(player_1, player_2)
-    winner = current_game.check_winner()
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+
+@app.route('/<hand_1>/<hand_2>')
+def play_the_game(hand_1, hand_2):
+    player_1 = Player("Player 1", hand_1)
+    player_2 = Player("Player 2", hand_2)
+    game = Game(player_1, player_2)
+    winner = game.play_game()
+    return render_template('result.html', winner = winner)
+
+@app.route('/play_game')
+def play_game():
+    return render_template('play_game.html')
